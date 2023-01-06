@@ -29,7 +29,7 @@ public class Stream_03_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Retrouver la commande avec le prix le plus élevé
-		Optional<Order> result = null;
+		Optional<Order> result = orders.stream().max((o1,o2) -> (int)(o1.getPrice()-o2.getPrice()));
 
 		assertThat(result.isPresent(), is(true));
 		assertThat(result.get().getPrice(), is(2200.0));
@@ -41,7 +41,7 @@ public class Stream_03_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Retrouver la commande avec le prix le moins élevé
-		Optional<Order> result = null;
+		Optional<Order> result = orders.stream().min((o1,o2) -> (int)(o1.getPrice()-o2.getPrice()));
 
 		assertThat(result.isPresent(), is(true));
 		assertThat(result.get().getPrice(), is(1000.0));
@@ -65,7 +65,7 @@ public class Stream_03_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Extraire la liste des pizzas de toutes les commandes
-		List<Pizza> result = null;
+		List<Pizza> result = orders.stream().map(p -> p.getPizzas()).flatMap(List::stream).collect(Collectors.toList());
 
 		assertThat(result.size(), is(9));
 	}
@@ -76,7 +76,7 @@ public class Stream_03_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Extraire la liste des différentes pizzas de toutes les commandes
-		List<Pizza> result = null;
+		List<Pizza> result = orders.stream().map(p -> p.getPizzas()).flatMap(List::stream).distinct().collect(Collectors.toList());
 
 		assertThat(result.size(), is(4));
 	}
